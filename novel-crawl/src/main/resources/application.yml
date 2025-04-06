@@ -25,7 +25,7 @@ crawl:
   # 采集间隔时间，单位：毫秒
   interval:
     min: 300
-    max: 500
+    max: 1000
 
 
 

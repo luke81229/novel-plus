@@ -13,7 +13,7 @@ spring:
 
 #模版配置
 templates:
-  name: green
+  name: blue
 
 
 pic:

@@ -37,7 +37,7 @@ CREATE TABLE `author` (
 -- Records of author
 -- ----------------------------
 INSERT INTO `author` VALUES ('1', null, 'reerer', 'abc', '13560487656', '23484388', '23484388@qq.com', '0', '0', null);
-INSERT INTO `author` VALUES ('2', '1255060328322027520', 'rwrr445554', '梦入神机', '13560421324', '1179705413', 'reerer@qq.com', '0', '0', '2020-05-13 14:01:31');
+INSERT INTO `author` VALUES ('2', '1255060328322027520', 'rwrr445554', '梦入神机', '13560421324', '12345678', 'reerer@qq.com', '0', '0', '2020-05-13 14:01:31');
 
 -- ----------------------------
 -- Table structure for author_code

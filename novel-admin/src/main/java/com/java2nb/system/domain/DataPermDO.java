@@ -13,7 +13,7 @@ import java.util.Objects;
  * 数据权限管理
  *
  * @author xiongxy
- * @email 1179705413@qq.com
+ * @email 12345678@qq.com
  * @date 2019-11-25 11:40:03
  */
 public class DataPermDO implements Serializable {

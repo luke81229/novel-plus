@@ -10,12 +10,15 @@ spring:
   jackson:
     generator:
       write-numbers-as-strings: true
-
   #上传文件的最大值（100M）
   servlet:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+#  banner:
+#    charset: utf-8
+#  messages:
+#    encoding: UTF-8
 
 mybatis:
   configuration:

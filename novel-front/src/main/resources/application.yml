@@ -1,5 +1,6 @@
 server:
   port: 8083
+  address: 0.0.0.0
 
 spring:
   profiles:
@@ -7,7 +8,7 @@ spring:
     include: website,alipay,oss
 
 jwt:
-  secret: novel!#20191230
+  secret: novel!#20250330
   expiration: 604800
 
 #缓存管理密码

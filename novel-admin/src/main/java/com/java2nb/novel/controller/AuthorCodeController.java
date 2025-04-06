@@ -26,7 +26,7 @@ import com.java2nb.common.utils.R;
  * 作家邀请码表
  *
  * @author xiongxy
- * @email 1179705413@qq.com
+ * @email 12345678@qq.com
  * @date 2020-05-13 11:29:15
  */
 

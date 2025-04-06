@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>novel-admin</name>
-    <description>小说精品屋后台管理</description>
+    <description>小威小说网后台管理</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -43,7 +43,20 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
+        <!-- Add Undertow dependency instead of Tomcat -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>

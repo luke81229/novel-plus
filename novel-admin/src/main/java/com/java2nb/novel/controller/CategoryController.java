@@ -26,7 +26,7 @@ import com.java2nb.common.utils.R;
  * 新闻类别表
  *
  * @author xiongxy
- * @email 1179705413@qq.com
+ * @email 12345678@qq.com
  * @date 2020-12-01 10:03:41
  */
 

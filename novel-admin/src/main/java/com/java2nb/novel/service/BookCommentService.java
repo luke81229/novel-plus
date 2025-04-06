@@ -9,7 +9,7 @@ import java.util.Map;
  * 小说评论表
  * 
  * @author xiongxy
- * @email 1179705413@qq.com
+ * @email 12345678@qq.com
  * @date 2023-04-14 21:59:28
  */
 public interface BookCommentService {

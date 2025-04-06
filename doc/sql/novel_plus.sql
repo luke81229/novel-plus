@@ -30,7 +30,7 @@ CREATE TABLE `author`
 INSERT INTO `author`
 VALUES ('1', null, 'reerer', 'abc', '13560487656', '23484388', '23484388@qq.com', '0', '0', null);
 INSERT INTO `author`
-VALUES ('2', '1255060328322027520', 'rwrr445554', '梦入神机', '13560421324', '1179705413', 'reerer@qq.com', '0', '0',
+VALUES ('2', '1255060328322027520', 'rwrr445554', '梦入神机', '13560421324', '12345678', 'reerer@qq.com', '0', '0',
         '2020-05-13 14:01:31');
 
 -- ----------------------------
@@ -71,13 +71,13 @@ CREATE TABLE `book`
     `work_direction`         tinyint(1)             DEFAULT NULL COMMENT '作品方向，0：男频，1：女频''',
     `cat_id`                 int(11)                DEFAULT NULL COMMENT '分类ID',
     `cat_name`               varchar(50)            DEFAULT NULL COMMENT '分类名',
-    `pic_url`                varchar(200)  NOT NULL COMMENT '小说封面',
-    `book_name`              varchar(50)   NOT NULL COMMENT '小说名',
+    `pic_url`                varchar(200)  DEFAULT NULL COMMENT '小说封面',
+    `book_name`              varchar(50)   DEFAULT NULL COMMENT '小说名',
     `author_id`              bigint(20)             DEFAULT NULL COMMENT '作者id',
-    `author_name`            varchar(50)   NOT NULL COMMENT '作者名',
-    `book_desc`              varchar(2000) NOT NULL COMMENT '书籍描述',
-    `score`                  float         NOT NULL COMMENT '评分，预留字段',
-    `book_status`            tinyint(1)    NOT NULL DEFAULT '0' COMMENT '书籍状态，0：连载中，1：已完结',
+    `author_name`            varchar(50)   DEFAULT NULL COMMENT '作者名',
+    `book_desc`              varchar(4096) DEFAULT NULL COMMENT '书籍描述',
+    `score`                  float         DEFAULT NULL COMMENT '评分，预留字段',
+    `book_status`            tinyint(1)    DEFAULT NULL DEFAULT '0' COMMENT '书籍状态，0：连载中，1：已完结',
     `visit_count`            bigint(20)             DEFAULT '103' COMMENT '点击量',
     `word_count`             int(11)                DEFAULT NULL COMMENT '总字数',
     `comment_count`          int(11)                DEFAULT '0' COMMENT '评论数',
@@ -86,7 +86,7 @@ CREATE TABLE `book`
     `last_index_update_time` datetime               DEFAULT NULL COMMENT '最新目录更新时间',
     `is_vip`                 tinyint(1)             DEFAULT '0' COMMENT '是否收费，1：收费，0：免费',
     `status`                 tinyint(1)             DEFAULT '0' COMMENT '状态，0：入库，1：上架',
-    `update_time`            datetime      NOT NULL COMMENT '更新时间',
+    `update_time`            datetime      DEFAULT NULL COMMENT '更新时间',
     `create_time`            datetime               DEFAULT NULL COMMENT '创建时间',
     `crawl_source_id`        int(11)                DEFAULT NULL COMMENT '爬虫源站ID',
     `crawl_book_id`          varchar(32)            DEFAULT NULL COMMENT '抓取的源站小说ID',
@@ -469,7 +469,7 @@ CREATE TABLE `friend_link`
 -- Records of friend_link
 -- ----------------------------
 INSERT INTO `friend_link`
-VALUES ('5', '小说精品屋', 'https://novel.xxyopen.com', '11', '1', null, null, null, null);
+VALUES ('5', '小威小说网', 'https://novel.xxyopen.com', '11', '1', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for news
@@ -2931,10 +2931,10 @@ CREATE TABLE `website_info`
 
 INSERT INTO website_info (id, name, domain, keyword, description, qq, logo, logo_dark, create_time, create_user_id,
                           update_time, update_user_id)
-VALUES (1, '小说精品屋', 'www.xxyopen.com', '小说精品屋,小说,小说CMS,原创文学系统,开源小说系统,免费小说建站程序',
-        '小说精品屋是一个多端（PC、WAP）阅读、功能完善的原创文学CMS系统，由前台门户系统、作家后台管理系统、平台后台管理系统、爬虫管理系统等多个子系统构成，支持会员充值、订阅模式、新闻发布和实时统计报表等功能，新书自动入库，老书自动更新。',
-        '1179705413', 'https://youdoc.gitee.io/resource/images/logo/logo.png',
-        'https://youdoc.gitee.io/resource/images/logo/logo_white.png', null, null, null, null);
+VALUES (1, '小威小说网', 'www.xiaoweinovel.com', '小威小说网,小说,小说CMS,原创文学系统,开源小说系统,免费小说建站程序',
+        '小威小说网是一个多端（PC、WAP）阅读、功能完善的原创文学CMS系统，由前台门户系统、作家后台管理系统、平台后台管理系统、爬虫管理系统等多个子系统构成，支持会员充值、订阅模式、新闻发布和实时统计报表等功能，新书自动入库，老书自动更新。',
+        '12345678', 'https://image.gitee.io/resource/images/logo/logo.png',
+        'https://image.gitee.io/resource/images/logo/logo_white.png', null, null, null, null);
 
 INSERT INTO sys_menu (menu_id, parent_id, name, url, perms, type, icon, order_num, gmt_create, gmt_modified)
 VALUES (300, 0, '网站管理', '', '', 0, 'fa fa-television', 6, null, null);
@@ -3090,8 +3090,8 @@ VALUES (1, 305);
 
 
 update website_info
-set logo     = 'https://youdoc.gitee.io/resource/images/logo%20(1).png',
-    logo_dark='https://youdoc.gitee.io/resource/images/logo%20(1).png'
+set logo     = 'https://image.gitee.io/resource/images/logo%20(1).png',
+    logo_dark='https://image.gitee.io/resource/images/logo%20(1).png'
 where id = 1;
 
 

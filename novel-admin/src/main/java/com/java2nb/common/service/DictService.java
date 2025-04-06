@@ -10,7 +10,7 @@ import java.util.Map;
  * 字典表
  * 
  * @author xiongxy
- * @email 1179705413@qq.com
+ * @email 12345678@qq.com
  * @date 2019-09-29 18:28:07
  */
 public interface DictService {

@@ -10,7 +10,7 @@ spring:
       #Redis服务器连接端口
       port: 6379
       #Redis服务器连接密码
-      password: test123456
+      password: 123456
       #连接超时时间（毫秒）
       timeout: 10000
 
@@ -38,10 +38,10 @@ http:
     # 是否开启 HTTP 代理，true-开启，false-不开启
     enabled: false
     # 代理 IP
-    ip: us.swiftproxy.net
+    ip:
     # 代理端口号
-    port: 7878
+    port:
     # 代理用户名
-    username: swiftproxy_u
+    username:
     # 代理密码
-    password: swiftproxy_p
+    password:

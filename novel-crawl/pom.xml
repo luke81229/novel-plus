@@ -12,10 +12,9 @@
     <artifactId>novel-crawl</artifactId>
 
     <name>novel-crawl</name>
-    <description>小说精品屋 爬虫管理程序</description>
+    <description>小威小说网 爬虫管理程序</description>
 
     <dependencies>
-
         <dependency>
             <groupId>com.java2nb</groupId>
             <artifactId>novel-common</artifactId>
@@ -37,7 +36,23 @@
             <artifactId>jackson-databind</artifactId>
         </dependency>
 
+        <!-- Add Undertow dependency instead of Tomcat -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
 
+        <!-- Exclude Tomcat if using Spring Boot starter web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
     <build>
@@ -87,6 +102,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

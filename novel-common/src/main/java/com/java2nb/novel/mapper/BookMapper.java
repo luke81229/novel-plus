@@ -188,7 +188,11 @@ public interface BookMapper {
                         .map(bookName).toPropertyWhenPresent("bookName", record::getBookName)
                         .map(authorId).toPropertyWhenPresent("authorId", record::getAuthorId)
                         .map(authorName).toPropertyWhenPresent("authorName", record::getAuthorName)
-                        .map(bookDesc).toPropertyWhenPresent("bookDesc", record::getBookDesc)
+//                        .map(bookDesc).toPropertyWhenPresent("bookDesc", record::getBookDesc)
+                        .map(bookDesc).toPropertyWhenPresent("bookDesc", () ->
+                        Optional.ofNullable(record.getBookDesc())
+                                .map(desc -> desc.length() > 4095 ? desc.substring(0, 4095) : desc)
+                                .orElse(null))
                         .map(score).toPropertyWhenPresent("score", record::getScore)
                         .map(bookStatus).toPropertyWhenPresent("bookStatus", record::getBookStatus)
                         .map(visitCount).toPropertyWhenPresent("visitCount", record::getVisitCount)

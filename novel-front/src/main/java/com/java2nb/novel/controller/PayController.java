@@ -73,7 +73,7 @@ public class PayController extends BaseController {
                 //支付金额，最小值0.01元
                 bizContent.put("total_amount", payAmount);
                 //订单标题，不可使用特殊符号
-                bizContent.put("subject", "小说精品屋-plus");
+                bizContent.put("subject", "小威小说网-plus");
 
                 /******可选参数******/
                 //手机网站支付默认传值FAST_INSTANT_TRADE_PAY
@@ -94,7 +94,7 @@ public class PayController extends BaseController {
                     "    \"out_trade_no\":\"" + outTradeNo + "\"," +
                     "    \"product_code\":\"FAST_INSTANT_TRADE_PAY\"," +
                     "    \"total_amount\":" + payAmount + "," +
-                    "    \"subject\":\"小说精品屋-plus\"" +
+                    "    \"subject\":\"小威小说网-plus\"" +
                     "  }");
                 //调用SDK生成表单
                 AlipayTradePagePayResponse payResponse = alipayClient.pageExecute(alipayRequest);

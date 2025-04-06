@@ -18,7 +18,7 @@ import java.util.Date;
  * 小说内容表
  * 
  * @author xiongxy
- * @email 1179705413@qq.com
+ * @email 12345678@qq.com
  * @date 2023-04-14 19:52:06
  */
 public class BookContentDO implements Serializable {

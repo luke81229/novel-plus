@@ -18,7 +18,7 @@ import java.util.Date;
  * 作家邀请码表
  * 
  * @author xiongxy
- * @email 1179705413@qq.com
+ * @email 12345678@qq.com
  * @date 2020-05-13 11:29:15
  */
 public class AuthorCodeDO implements Serializable {

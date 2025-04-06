@@ -26,13 +26,13 @@ is_exist(){
 start(){
   is_exist
   if [ $? -eq "0" ]; then 
-    echo ">>> 小说精品屋爬虫正在运行 PID = ${pid} <<<" 
+    echo ">>> 小威小说网爬虫正在运行 PID = ${pid} <<<"
   else 
-    echo ">>> 小说精品屋爬虫开始启动 <<<" 
+    echo ">>> 小威小说网爬虫开始启动 <<<"
     nohup java -jar -Dspring.profiles.active=prod $JAR_NAME >/dev/null 2>&1 &
     sleep 10
     echo $! > $PID
-    echo ">>> 小说精品屋爬虫启动完成 PID = $! <<<" 
+    echo ">>> 小威小说网爬虫启动完成 PID = $! <<<"
     status
    fi
   }
@@ -42,13 +42,13 @@ stop(){
   #is_exist
   pidf=$(cat $PID)
   #echo "$pidf"  
-  echo ">>> 小说精品屋爬虫 PID = $pidf 开始停止 <<<"
+  echo ">>> 小威小说网爬虫 PID = $pidf 开始停止 <<<"
   kill $pidf
   rm -rf $PID
   sleep 2
   is_exist
   if [ $? -eq "0" ]; then 
-    echo ">>> 小说精品屋爬虫 PID = $pid 开始强制停止 <<<"
+    echo ">>> 小威小说网爬虫 PID = $pid 开始强制停止 <<<"
     kill -9  $pid
     sleep 2
     status 
@@ -61,9 +61,9 @@ stop(){
 status(){
   is_exist
   if [ $? -eq "0" ]; then
-    echo ">>> 小说精品屋爬虫正在运行 PID = ${pid} <<<"
+    echo ">>> 小威小说网爬虫正在运行 PID = ${pid} <<<"
   else
-    echo ">>> 小说精品屋爬虫没有运行 <<<"
+    echo ">>> 小威小说网爬虫没有运行 <<<"
   fi
 }
 

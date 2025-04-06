@@ -11,7 +11,7 @@ import java.util.Date;
 
 /**
  * @author xiongxy
- * @email 1179705413@qq.com
+ * @email 12345678@qq.com
  * @date 2023-04-14 15:12:25
  */
 public class FriendLinkDO implements Serializable {

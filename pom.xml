@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <name>novel</name>
-    <description>小说精品屋父工程</description>
+    <description>小威小说网父工程</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
