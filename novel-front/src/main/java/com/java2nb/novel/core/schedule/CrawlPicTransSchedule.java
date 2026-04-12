@@ -39,16 +39,19 @@ public class CrawlPicTransSchedule {
     @SneakyThrows
     public void trans() {
 
-        log.info("Network2LocalPicSchedule。。。。。。。。。。。。");
-
-
-        List<Book> networkPicBooks = bookService.queryNetworkPicBooks(Constants.LOCAL_PIC_PREFIX,100);
+        List<Book> networkPicBooks = bookService.queryNetworkPicBooks(Constants.LOCAL_PIC_PREFIX, 100);
+        log.info("CrawlPicTransSchedule: run, pendingNetworkCoverBooks={}", networkPicBooks.size());
         for (Book book : networkPicBooks) {
-            bookService.updateBookPicToLocal(book.getPicUrl(), book.getId());
+            log.info("CrawlPicTransSchedule: item bookId={} picUrl={}", book.getId(), book.getPicUrl());
+            try {
+                bookService.updateBookPicToLocal(book.getPicUrl(), book.getId());
+                log.info("CrawlPicTransSchedule: item done bookId={}", book.getId());
+            } catch (Exception e) {
+                log.error("CrawlPicTransSchedule: item failed bookId={} picUrl={}", book.getId(), book.getPicUrl(), e);
+            }
             //3秒钟转化一张图片，10分钟转化200张
             Thread.sleep(3000);
         }
-
-
+        log.info("CrawlPicTransSchedule: batch end, processedCount={}", networkPicBooks.size());
     }
 }

@@ -30,8 +30,21 @@ mybatis:
 logging:
   config: classpath:logback-boot.xml
 
+# 运行时调整日志级别：GET/POST /actuator/loggers（生产请限制网络访问或仅本机）
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,loggers
+
 pagehelper:
   helper-dialect: mysql
 
+# 业务缓存（CacheService）：guava 本地内存（默认，可不启 Redis）| redis
+# keep-redis-autoconfig=true 时仍加载 Spring Data Redis（novel-admin 后台 Shiro 等依赖，须开启）
+novel:
+  cache:
+    impl: guava
+    keep-redis-autoconfig: false
 
 

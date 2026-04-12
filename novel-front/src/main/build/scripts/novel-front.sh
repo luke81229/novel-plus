@@ -3,6 +3,8 @@ APP_NAME=novel-front
 JAR_NAME=$APP_NAME\.jar
 #PID  代表是PID文件
 PID=$APP_NAME\.pid
+# JVM 标准输出/错误（含未进 logback 的启动信息），与 logback 的 logs/novel-front.log 并存
+NOHUP_LOG=logs/${APP_NAME}-nohup.log
 
 
 #使用说明，用来提示输入参数
@@ -29,10 +31,11 @@ start(){
     echo ">>> 小威小说网前台正在运行 PID = ${pid} <<<"
   else
     echo ">>> 小威小说网前台开始启动 <<<"
-    nohup java -jar -Dspring.profiles.active=prod $JAR_NAME >/dev/null 2>&1 &
-    sleep 20
+    mkdir -p logs
+    nohup java -Dspring.profiles.active=prod -jar $JAR_NAME >>"$NOHUP_LOG" 2>&1 &
     echo $! > $PID
-    echo ">>> 小威小说网前台启动完成 PID = $! <<<"
+    echo ">>> 小威小说网前台已拉起 PID = $(cat $PID)，控制台输出见 $NOHUP_LOG（可 tail -f） <<<"
+    sleep 3
     status
    fi
   }

@@ -53,6 +53,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -73,11 +78,21 @@
                         <configuration>
                             <tasks>
                                 <!-- 文件夹 -->
+                                <mkdir dir="${project.build.directory}/build/config"/>
                                 <copy todir="${project.build.directory}/build/config" overwrite="true">
-                                    <fileset dir="${basedir}/src/main/build/config">
-                                        <include name="*.*"/>
+                                    <fileset dir="${basedir}/src/main/resources">
+                                        <include name="application.yml"/>
+                                        <include name="application-prod.yml"/>
+                                    </fileset>
+                                    <fileset dir="${basedir}/../novel-common/src/main/resources">
+                                        <include name="application-common.yml"/>
+                                        <include name="application-common-prod.yml"/>
                                     </fileset>
                                 </copy>
+                                <replace file="${project.build.directory}/build/config/application.yml"
+                                         token="active: dev" value="active: prod" encoding="UTF-8"/>
+                                <copy file="${basedir}/src/main/build/config/shardingsphere-jdbc.yml"
+                                      todir="${project.build.directory}/build/config" overwrite="true"/>
                                 <copy file="${project.build.directory}/${project.artifactId}-${project.version}.jar"
                                       tofile="${project.build.directory}/build/${project.artifactId}.jar"/>
 
@@ -89,8 +104,10 @@
                                         <include name="*.bat"/>
                                     </fileset>
                                 </copy>
-                                <zip destfile='${project.build.directory}/build/${project.artifactId}.zip'>
-                                    <zipfileset filemode="755" dir='${project.build.directory}/build/'/>
+                                <zip destfile="${project.build.directory}/build/${project.artifactId}.zip">
+                                    <zipfileset filemode="755" dir="${project.build.directory}/build">
+                                        <exclude name="${project.artifactId}.zip"/>
+                                    </zipfileset>
                                 </zip>
 
                                 <copy file="${basedir}/src/main/build/docker/Dockerfile"

@@ -8,6 +8,12 @@ server:
 #security:
 #  basic:
 #    enabled: false
+# 后台：Shiro（Jedis）及部分控制器依赖 Redis，须保留自动配置；此处 CacheService 使用 redis（前台/采集默认可为 guava）
+novel:
+  cache:
+    impl: redis
+    keep-redis-autoconfig: true
+
 spring:
   datasource:
     driverClassName: org.apache.shardingsphere.driver.ShardingSphereDriver

@@ -29,44 +29,49 @@ public class OssFileServiceImpl implements FileService {
 
     @Override
     public String transFile(String picSrc, String picSavePath) {
-
+        log.info("OssFileServiceImpl.transFile: start remote={}", picSrc);
         File file;
         String filePath = FileUtil.network2Local(picSrc, picSavePath, Constants.LOCAL_PIC_PREFIX);
+        log.info("OssFileServiceImpl.transFile: after download tempPath={}", filePath);
         if (filePath.contains(Constants.LOCAL_PIC_PREFIX)) {
-            file = new File(picSavePath+filePath);
+            file = new File(picSavePath + filePath);
         } else {
-            //默认图片不存储
+            log.warn("OssFileServiceImpl.transFile: skip OSS upload (not local temp), return path={}", filePath);
             return filePath;
         }
 
-        filePath = filePath.replaceFirst(picSavePath,"");
+        filePath = filePath.replaceFirst(picSavePath, "");
 
-        filePath = filePath.startsWith("/") ? filePath.replaceFirst("/","") : filePath;
-
+        filePath = filePath.startsWith("/") ? filePath.replaceFirst("/", "") : filePath;
 
         OSSClient ossClient = new OSSClient(ossProperties.getEndpoint(), ossProperties.getKeyId(), ossProperties.getKeySecret());
         try {
-            //容器不存在，就创建
             if (!ossClient.doesBucketExist(ossProperties.getBucketName())) {
                 ossClient.createBucket(ossProperties.getBucketName());
                 CreateBucketRequest createBucketRequest = new CreateBucketRequest(ossProperties.getBucketName());
                 createBucketRequest.setCannedACL(CannedAccessControlList.PublicRead);
                 ossClient.createBucket(createBucketRequest);
             }
-            //上传文件
+            log.info("OssFileServiceImpl.transFile: putObject bucket={} key={} file={}", ossProperties.getBucketName(),
+                filePath, file.getAbsolutePath());
             PutObjectResult result = ossClient.putObject(new PutObjectRequest(ossProperties.getBucketName(), filePath, file));
-            //设置权限 这里是公开读
             ossClient.setBucketAcl(ossProperties.getBucketName(), CannedAccessControlList.PublicRead);
 
-            if(result != null) {
-                return ossProperties.getWebUrl() + "/" + filePath;
+            if (result != null) {
+                String webUrl = ossProperties.getWebUrl() + "/" + filePath;
+                log.info("OssFileServiceImpl.transFile: ok webUrl={}", webUrl);
+                return webUrl;
             }
+            log.warn("OssFileServiceImpl.transFile: putObject result null, fallback=/images/default.gif key={}", filePath);
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            log.error("OssFileServiceImpl.transFile: OSS upload failed, fallback=/images/default.gif key={}", filePath, e);
         } finally {
-            //关闭
             ossClient.shutdown();
-            file.delete();
+            if (file.delete()) {
+                log.info("OssFileServiceImpl.transFile: temp file deleted {}", file.getAbsolutePath());
+            } else {
+                log.warn("OssFileServiceImpl.transFile: temp file delete failed {}", file.getAbsolutePath());
+            }
         }
 
         return "/images/default.gif";

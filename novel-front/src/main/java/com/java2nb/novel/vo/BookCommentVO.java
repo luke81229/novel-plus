@@ -5,12 +5,14 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.java2nb.novel.core.serialize.CommentUserNameSerialize;
 import com.java2nb.novel.entity.BookComment;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
 /**
  * @author 11797
  */
+@EqualsAndHashCode(callSuper = false)
 @Data
 public class BookCommentVO extends BookComment {
 

@@ -3,6 +3,7 @@ APP_NAME=novel-crawl
 JAR_NAME=$APP_NAME\.jar
 #PID  代表是PID文件
 PID=$APP_NAME\.pid
+NOHUP_LOG=logs/${APP_NAME}-nohup.log
 
 
 #使用说明，用来提示输入参数
@@ -29,10 +30,11 @@ start(){
     echo ">>> 小威小说网爬虫正在运行 PID = ${pid} <<<"
   else 
     echo ">>> 小威小说网爬虫开始启动 <<<"
-    nohup java -jar -Dspring.profiles.active=prod $JAR_NAME >/dev/null 2>&1 &
-    sleep 10
+    mkdir -p logs
+    nohup java -Dspring.profiles.active=prod -jar $JAR_NAME >>"$NOHUP_LOG" 2>&1 &
     echo $! > $PID
-    echo ">>> 小威小说网爬虫启动完成 PID = $! <<<"
+    echo ">>> 小威小说网爬虫已拉起 PID = $(cat $PID)，控制台输出见 $NOHUP_LOG（可 tail -f） <<<"
+    sleep 3
     status
    fi
   }

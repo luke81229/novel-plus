@@ -2,6 +2,9 @@ package com.java2nb.novel.core.cache.impl;
 
 import com.java2nb.novel.core.cache.CacheService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -11,8 +14,11 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author xxy
  */
+@Primary
+@Lazy
 @RequiredArgsConstructor
 @Service
+@ConditionalOnProperty(prefix = "novel.cache", name = "impl", havingValue = "redis")
 public class RedisServiceImpl implements CacheService {
 
     private final StringRedisTemplate stringRedisTemplate;

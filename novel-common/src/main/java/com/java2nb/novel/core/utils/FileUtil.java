@@ -39,22 +39,23 @@ public class FileUtil {
      * 网络图片转本地
      */
     public String network2Local(String picSrc, String picSavePath, String visitPrefix) {
+        final String remoteUrl = picSrc;
         InputStream input = null;
         OutputStream out = null;
         try {
-            //本地图片保存
+            log.info("network2Local: start GET remote={}", remoteUrl);
             HttpHeaders headers = new HttpHeaders();
             HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
             ResponseEntity<Resource> resEntity = RestTemplates.newInstance(Charsets.ISO_8859_1.name())
-                .exchange(picSrc, HttpMethod.GET, requestEntity, Resource.class);
+                .exchange(remoteUrl, HttpMethod.GET, requestEntity, Resource.class);
             input = Objects.requireNonNull(resEntity.getBody()).getInputStream();
             Date currentDate = new Date();
-            picSrc =
+            String relativePath =
                 visitPrefix + DateUtils.formatDate(currentDate, "yyyy") + "/" + DateUtils.formatDate(currentDate, "MM")
                     + "/" + DateUtils.formatDate(currentDate, "dd") + "/"
                     + UUIDUtil.getUUID32()
-                    + picSrc.substring(picSrc.lastIndexOf("."));
-            File picFile = new File(picSavePath + picSrc);
+                    + remoteUrl.substring(remoteUrl.lastIndexOf("."));
+            File picFile = new File(picSavePath + relativePath);
             File parentFile = picFile.getParentFile();
             if (!parentFile.exists()) {
                 parentFile.mkdirs();
@@ -67,12 +68,18 @@ public class FileUtil {
 
             out.flush();
             if (ImageIO.read(picFile) == null) {
+                log.warn(
+                    "network2Local: saved bytes are not a valid image, fallback=/images/default.gif remote={} file={}",
+                    remoteUrl, picFile.getAbsolutePath());
                 picSrc = "/images/default.gif";
+            } else {
+                picSrc = relativePath;
+                log.info("network2Local: ok remote={} localRelative={} absolute={}", remoteUrl, relativePath,
+                    picFile.getAbsolutePath());
             }
 
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
-
+            log.error("network2Local: download or write failed, fallback=/images/default.gif remote={}", remoteUrl, e);
             picSrc = "/images/default.gif";
         } finally {
             closeStream(input, out);

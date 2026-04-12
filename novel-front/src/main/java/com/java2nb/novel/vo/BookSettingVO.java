@@ -2,12 +2,14 @@ package com.java2nb.novel.vo;
 
 import com.java2nb.novel.entity.BookSetting;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
 /**
  * @author 11797
  */
+@EqualsAndHashCode(callSuper = false)
 @Data
 public class BookSettingVO extends BookSetting implements Serializable {
 

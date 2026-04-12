@@ -61,6 +61,11 @@
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -81,15 +86,25 @@
                         <configuration>
                             <tasks>
                                 <!-- 文件夹 -->
+                                <!-- 发布包 config：含完整 application.yml（与 resources 一致）+ prod 相关 yml；active 改为 prod；不含 dev -->
+                                <mkdir dir="${project.build.directory}/build/config"/>
                                 <copy todir="${project.build.directory}/build/config" overwrite="true">
-                                    <fileset dir="${basedir}/src/main/build/config">
-                                        <include name="*.*"/>
-                                    </fileset>
                                     <fileset dir="${basedir}/src/main/resources">
+                                        <include name="application.yml"/>
+                                        <include name="application-prod.yml"/>
                                         <include name="application-alipay.yml"/>
                                         <include name="application-website.yml"/>
+                                        <include name="application-oss.yml"/>
+                                    </fileset>
+                                    <fileset dir="${basedir}/../novel-common/src/main/resources">
+                                        <include name="application-common.yml"/>
+                                        <include name="application-common-prod.yml"/>
                                     </fileset>
                                 </copy>
+                                <replace file="${project.build.directory}/build/config/application.yml"
+                                         token="active: dev" value="active: prod" encoding="UTF-8"/>
+                                <copy file="${basedir}/src/main/build/config/shardingsphere-jdbc.yml"
+                                      todir="${project.build.directory}/build/config" overwrite="true"/>
                                 <copy todir="${project.build.directory}/build/templates" overwrite="true">
                                     <fileset dir="${basedir}/../templates">
                                         <include name="**/*.*"/>
@@ -106,8 +121,11 @@
                                         <include name="*.bat"/>
                                     </fileset>
                                 </copy>
-                                <zip destfile='${project.build.directory}/build/${project.artifactId}.zip'>
-                                    <zipfileset filemode="755" dir='${project.build.directory}/build/'/>
+                                <!-- destfile 在 dir 内，须排除自身，否则 Ant: A zip file cannot include itself -->
+                                <zip destfile="${project.build.directory}/build/${project.artifactId}.zip">
+                                    <zipfileset filemode="755" dir="${project.build.directory}/build">
+                                        <exclude name="${project.artifactId}.zip"/>
+                                    </zipfileset>
                                 </zip>
 
                                 <copy file="${basedir}/src/main/build/docker/Dockerfile"
